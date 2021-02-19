@@ -7,12 +7,32 @@
     <title> color selector</title> <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="harmonies">
+        <label><input type="radio" name="harmony" value="analogous">Analogous</label>
+        <label><input type="radio" name="harmony" value="monochromatic">Monochromatic</label>
+        <label><input type="radio" name="harmony" value="triad">Triad</label>
+        <label><input type="radio" name="harmony" value="complementary">Complementary</label>
+        <label><input type="radio" name="harmony" value="compound">Compound</label>
+        <label><input type="radio" name="harmony" value="shades">Shades</label>
+      </div>
+    
+      
  <form action="">
         <p>
         <label for="">Select color</label>
         <input type="color" class="color-selector">
         </p>
         <div class="box"></div>
+        <p>HEX: <span id="hex"></span></p>
+        <p>RGB: <span id="rgb"></span></p>
+        <p>HSL: <span id="hsl"></span></p>
+
+        <div class="box"></div>
+        <p>HEX: <span id="hex"></span></p>
+        <p>RGB: <span id="rgb"></span></p>
+        <p>HSL: <span id="hsl"></span></p>
+        <div class="box"></div>
+        
         <p>HEX: <span id="hex"></span></p>
         <p>RGB: <span id="rgb"></span></p>
         <p>HSL: <span id="hsl"></span></p>

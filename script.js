@@ -1,12 +1,12 @@
 'use strict';
 
-
-init()
+window.addEventListener("DOMContentLoaded",init);
 function init(){
 const hex ="#c0ffee";
 const rgb = hexToRgb(hex);
- 
-}
+
+  }
+
 
 const color = document.querySelector('.color-selector');
 color.addEventListener('change', getValue);
@@ -27,65 +27,98 @@ document.querySelector('#hsl').textContent = rgbToHsl(green, red, blue)
 }
 
 
-function hexToRgb(hex) {
- const hexR = hex.substring(1, 3);
- const hexG = hex.substring(3, 5);
- const hexB = hex.substring(5, 7);
+function hexToRgb( hex ) {
+  const r = Number.parseInt(hex.substring(1,3),16);
+  const g = Number.parseInt(hex.substring(3,5),16);
+  const b = Number.parseInt(hex.substring(5,7),16);
+
+  return {r,g,b};
+}
+
+function rgbToHsl(r,g,b) {
+  // Make r, g, and b fractions of 1
+  r /= 255;
+  g /= 255;
+  b /= 255;
+
+  // Find greatest and smallest channel values
+  let cmin = Math.min(r,g,b),
+      cmax = Math.max(r,g,b),
+      delta = cmax - cmin,  
+      h = 0,
+      s = 0,
+      l = 0;
+
+      // Calculate hue
+  // No difference
+  if (delta == 0)
+  h = 0;
+
+else if (cmax == r)
+  h = ((g - b) / delta) % 6;
+
+else if (cmax == g)
+  h = (b - r) / delta + 2;
+
+else
+  h = (r - g) / delta + 4;
+
+h = Math.round(h * 60);
+
+if (h < 0)
+    h += 360;
+
+  l = (cmax + cmin) / 2;
 
 
-const r = parseInt(hexR, 16);
-const g = parseInt(hexG, 16);
-const b = parseInt(hexB, 16);
-    return r, g, b;
- }
+  s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+    
+  s = +(s * 100).toFixed(1);
+  l = +(l * 100).toFixed(1);
 
-  
-   
-function rgbToHsl(r, g, b) {
-
-r /= 255;
-g /= 255;
-b /= 255;
-
-let h, s, l;
-const min = Math.min(r, g, b);
-const max = Math.max(r, g, b);
-
-if (max === min) {
- h = 0;
- } else
-if (max === r) {
-h = 60 * (0 + (g - b) / (max - min));
- } else
- if (max === g) {
-                h = 60 * (2 + (b - r) / (max - min));
-} else
-if (max === b) {
- h = 60 * (4 + (r - g) / (max - min));
- }
-
-
-if (h < 0) {
-  h = h + 360;
- }
-
-
- l = (min + max) / 2;
-
- 
-
- if (max === 0 || min === 1) {
- s = 0;
-} else {
-  s = (max - l) / (Math.min(l, 1 - l));
- }
-            
-s *= 100;
-l *= 100;
-            
-return `hsl (${slicer(h)}, ${slicer(s)}%, ${slicer(l)}%)`
-}  
-function slicer (string){
- return slicer.toString().substr(0, 5);
+  return "" + h + "% " + s + "% " + l + "%";
+}
+         
+       
+function hslToRgb( hsl ) {
+          const h = hsl.h;
+          const s = hsl.s / 100;
+          const l = hsl.l / 100;
+         
+        let c = (1 - Math.abs(2 * l - 1)) * s,
+        x = c * (1 - Math.abs(((h / 60) % 2) - 1)),
+        m = l - c / 2,
+        r = 0,
+        g = 0,
+        b = 0;
+        if (0 <= h && h < 60) {
+        r = c;
+        g = x;
+        b = 0;
+        } else if (60 <= h && h < 120) {
+        r = x;
+        g = c;
+        b = 0;
+        } else if (120 <= h && h < 180) {
+        r = 0;
+        g = c;
+        b = x;
+        } else if (180 <= h && h < 240) {
+        r = 0;
+        g = x;
+        b = c;
+        } else if (240 <= h && h < 300) {
+        r = x;
+        g = 0;
+        b = c;
+        } else if (300 <= h && h < 360) {
+        r = c;
+        g = 0;
+        b = x;
         }
+        r = Math.round((r + m) * 255);
+        g = Math.round((g + m) * 255);
+        b = Math.round((b + m) * 255);
         
+        return {r,g,b};
+ }       

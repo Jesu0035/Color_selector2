@@ -10,6 +10,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 12px;
 }
 
 form {
@@ -19,16 +20,22 @@ form {
 }
 
 form > * {
-  margin: 10px;
+  margin: 5px;
 }
 
 .box {
-  height: 200px;
+  height: 100px;
   background: black;
-  border-radius: 10px;
+  border-radius: 5px;
+  width: 100px;
 }
 
 p {
   display: flex;
   justify-content: space-between;
+}
+#harmonies {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
 }
